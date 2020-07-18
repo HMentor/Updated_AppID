@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:hmentor/About.dart';
 import 'package:hmentor/ListPage.dart';
 import 'package:hmentor/mentor.dart';
-import 'package:draggable_floating_button/draggable_floating_button.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,19 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -46,15 +32,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -63,11 +40,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  List<String> _options = [
-    "Simple",
-    "Medium",
-    "Hard",
-  ];
+//  List<String> _options = [
+//    "Simple",
+//    "Medium",
+//    "Hard",
+//  ];
 
   @override
   void dispose() {
@@ -79,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage>
   TabController _tabController;
 
   int _counter = 0;
-  int _currentIndex = 0;
+//  int _currentIndex = 0;
 
 
   @override
@@ -87,27 +64,25 @@ class _MyHomePageState extends State<MyHomePage>
     _tabController = new TabController(length: 9, vsync: this);
     super.initState();
   }
- Future getPosts() async {
-    var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection("/2020/Mobile Based /Simple").getDocuments();
-    return qn.documents;
- }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.face,size: 30,),
-        backgroundColor: Colors.deepOrange,
+        leading: Padding(
+          padding: const EdgeInsets.only(top:10,left: 10),
+          child: CircleAvatar(backgroundImage: AssetImage('assets/logo.jpg'),maxRadius: 10,),
+        ),
+        backgroundColor: Colors.deepOrange[400],
         title: Padding(
-          padding: const EdgeInsets.only(left: 60),
+          padding: const EdgeInsets.only(/*left: 60*/),
           child: Text(
-            "HMentor",
+            "Problem Statements",
             style: GoogleFonts.pacifico(
                 textStyle: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 29,
                     shadows: [
                   Shadow(
                       blurRadius: 6.0,
@@ -118,7 +93,10 @@ class _MyHomePageState extends State<MyHomePage>
         ),
 //
         actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.deepOrangeAccent,size: 30,), onPressed: null)
+          IconButton(icon: Icon(Icons.error_outline,color: Colors.white,size: 30,), onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => About())))
         ],
         bottom: TabBar(
           onTap: (int index){ setState(() {
@@ -128,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage>
           });},
 
           isScrollable: true,
-
          // isScrollable: true,
           labelPadding: EdgeInsets.only(top: 12, right: 30, left: 50),
           unselectedLabelColor: Colors.white,

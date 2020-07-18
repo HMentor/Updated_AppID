@@ -16,6 +16,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  // ignore: non_constant_identifier_names
   String Youtube() {
     if (widget.post.data['YouTube Link'] == null) {
       return "NA";
@@ -26,14 +27,29 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final key = new GlobalKey<ScaffoldState>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrange[400],
         title: Text(widget.post.data['Owner'],style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
       ),
       body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.1, 0.3, 0.6, 0.9],
+            colors: [
+              Colors.deepOrange[300],
+              Colors.deepOrange[200],
+              Colors.deepPurple[200],
+              Colors.deepPurple[300],
+            ],
+          ),
+        ),
         child: Card(
+
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20.0),),
           child: ListView(
             padding: EdgeInsets.all(15.0),
             scrollDirection: Axis.vertical,

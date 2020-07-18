@@ -13,6 +13,7 @@ class Mentor extends StatefulWidget {
   _mentorState createState() => _mentorState();
 }
 
+// ignore: camel_case_types
 class _mentorState extends State<Mentor> {
 //  TextEditingController tx
   String getValue(){
@@ -36,6 +37,7 @@ class _mentorState extends State<Mentor> {
   final _problemStatementNode = FocusNode();
   final _problemDescriptionNode = FocusNode();
   final _nameNode = FocusNode();
+  final _mobileNode = FocusNode();
 
   var _query = UserQuery(name: '', email: '',problem_statement: "",help_description: "");
 
@@ -45,9 +47,23 @@ class _mentorState extends State<Mentor> {
     _problemDescriptionNode.dispose();
     _problemStatementNode.dispose();
     _nameNode.dispose();
+    _mobileNode.dispose();
     super.dispose();
     getValue();
   }
+
+  Future<void> uploadingData(String name, String email,
+      num Mobile, String problem_statement, String help_description) async {
+    await Firestore.instance.collection("Problem statements").add({
+      'Problem Statement': problem_statement,
+      'email': email,
+      'Description': help_description,
+      'Phone Number': Mobile,
+      'Name' : name,
+    });
+  }
+
+
 
   void _saveForm() {
     // isValid variable is used to store the current status of form
@@ -60,9 +76,11 @@ class _mentorState extends State<Mentor> {
     //_form.currentState.save is void type expression.
     //_form.currentState.save helps to save the current state of form.
     _form.currentState.save();
+    uploadingData(_query.name,_query.email,_query.Mobile,_query.problem_statement,_query.help_description);
     showAlertDialog(context);
     print(_query.name);
     print(_query.email);
+    print(_query.Mobile);
     print(_query.problem_statement);
     print(_query.help_description);
   }
@@ -101,6 +119,11 @@ class _mentorState extends State<Mentor> {
             child: Text("Email:- "+_query.email),
           ),
           Padding(
+            padding: const EdgeInsets.only(top:10.0),
+            child: Text("Mobile:- "+_query.Mobile.toString()),
+          ),
+
+          Padding(
             padding: const EdgeInsets.only(top:8.0),
             child: Text("Statement:- "+_query.problem_statement),
           ),
@@ -133,13 +156,13 @@ class _mentorState extends State<Mentor> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.deepOrange,size: 30,), onPressed: null)
+          IconButton(icon: Icon(Icons.search,color: Colors.deepOrange[500],size: 30,), onPressed: null)
         ],
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.deepOrange[500],
         title: Padding(
-          padding: const EdgeInsets.only(left: 70),
+          padding: const EdgeInsets.only(/*left: 70*/),
           child: Text(
-            "HMentor",
+            "Ask to HMentor",
             style: GoogleFonts.pacifico(
                 textStyle: TextStyle(
                     color: Colors.white,
@@ -164,6 +187,17 @@ class _mentorState extends State<Mentor> {
 
               //decoration for circular radius of Container
               decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Colors.deepOrange[400],
+                      Colors.deepOrange[300],
+                      Colors.deepOrange[300],
+                      Colors.deepOrange[400],
+                    ],
+                  ),
                   color: Colors.deepOrangeAccent,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(185),
@@ -179,8 +213,12 @@ class _mentorState extends State<Mentor> {
                 child: Column(
                   children: <Widget>[
                     Padding(
+                      padding: const EdgeInsets.only(top:20),
+                      child: Text("If You Have question, Just Ask Mentor.",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(
-                          left: 30.0, right: 30.0, bottom: 20, top: 40),
+                          left: 30.0, right: 30.0, bottom: 20, top: 20),
                       child: TextFormField(
                         decoration: InputDecoration(
                             errorStyle: TextStyle(
@@ -321,7 +359,7 @@ class _mentorState extends State<Mentor> {
                           //after pressing the enter button from keyboard, control will transfer to the next field
                           // next field can be requested using requestFocus
                           //_passFocus is focus node instance of password textformfield
-                          FocusScope.of(context).requestFocus(_problemStatementNode);
+                          FocusScope.of(context).requestFocus(_mobileNode);
                         },
 
                         //validator function takes the current value from textformfield as a argument
@@ -338,6 +376,86 @@ class _mentorState extends State<Mentor> {
                         },
                       ),
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 30.0, right: 30.0, bottom: 20, top: 10),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                                color: Colors.yellow,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.yellow,
+                                    style: BorderStyle.solid,
+                                    width: 3),
+                                borderRadius: BorderRadius.circular(20)),
+                            hintText: "Contact Number",
+                            hintStyle: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            prefixIcon: Icon(
+                              Icons.phone_iphone,
+                              color: Colors.white,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.white,
+                                    style: BorderStyle.solid,
+                                    width: 3),
+                                borderRadius: BorderRadius.circular(20))),
+
+                        //textInputAction property provides the buttons on the right bottom corners of KEYBOARD
+                        //in this case next button will provided on keyboard
+                        textInputAction: TextInputAction.next,
+                        cursorColor: Colors.blue,
+                        keyboardType: TextInputType.phone,
+
+                        //Style for the input text of textFormField
+                        style: TextStyle(
+                          // white color to the input text
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        //Here focus node is assigned
+                        //though this focusNode we can control email TextFormField
+                        focusNode: _mobileNode,
+
+                        //When save button pressed form keyboard the value of text-field is assigned to the email
+                        onSaved: (value) {
+                          _query = UserQuery(
+                              name: _query.name,
+                              email: _query.email,
+                              Mobile: int.parse(value),
+                              problem_statement: _query.problem_statement,
+                              help_description: _query.help_description
+                          );
+                        },
+                        onFieldSubmitted: (_) {
+                          //after pressing the enter button from keyboard, control will transfer to the next field
+                          // next field can be requested using requestFocus
+                          //_passFocus is focus node instance of password textformfield
+                          FocusScope.of(context).requestFocus(_problemStatementNode);
+                        },
+
+                        //validator function takes the current value from textformfield as a argument
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "This field can not be Empty";
+                          }
+
+                          // EmailValidator is function of dart library that helps to validate the email id
+                          if (value.length <10 || value.length>10) {
+                            return "Enter the Valid Mobile Number.";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+
 
                     Padding(
                       padding: const EdgeInsets.only(
@@ -686,6 +804,7 @@ class _mentorState extends State<Mentor> {
 class UserQuery{
   final String name;
   final String email;
+  final num Mobile;
   final String help_description;
   final String problem_statement;
 
@@ -693,6 +812,7 @@ class UserQuery{
   UserQuery({
     this.name,
     this.email,
+    this.Mobile,
     this.problem_statement,
     this.help_description,
   });

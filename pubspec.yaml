@@ -21,7 +21,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-
+  flutter_spinkit: "^4.1.2"
+  simple_animations: ^2.2.1
+  mailer: ^3.0.3
+  share: ^0.5.3
   cloud_firestore: ^0.13.7
   draggable_floating_button: ^0.1.1
   email_validator: 1.0.4
@@ -56,6 +59,8 @@ flutter:
     - assets/LOAD.gif
     - assets/logo.jpg
     - assets/Hitesh.jpg
+    - assets/Harshali.jpg
+    - assets/Vinay.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

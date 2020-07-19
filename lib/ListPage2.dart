@@ -4,15 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'DetaiPage.dart';
 
-class ListPage extends StatefulWidget {
+class ListPage2 extends StatefulWidget {
   @override
-  _ListPageState createState() => _ListPageState();
-
+  _ListPage2State createState() => _ListPage2State();
 }
 
 TextEditingController editingController;
 
-class _ListPageState extends State<ListPage> {
+class _ListPage2State extends State<ListPage2> {
   navigateToDetail(DocumentSnapshot post) {
     Navigator.push(
         context,
@@ -21,13 +20,15 @@ class _ListPageState extends State<ListPage> {
                   post: post,
                 )));
   }
-  // ignore: missing_return
-  Future getPost0() async {
-    var firestore = Firestore.instance;
 
-    QuerySnapshot mixh =
-        await firestore.collection("Mobile Based Simple").getDocuments();
-    return mixh.documents;
+  // ignore: missing_return
+  Future getPost1() async {
+    var firestore = Firestore.instance;
+    // else{
+    //if(widget.currentIndex ==2 && widget.icounter==0) {
+    QuerySnapshot qn =
+        await firestore.collection("Mobile Based Medium").getDocuments();
+    return qn.documents;
   }
 
   @override
@@ -51,7 +52,7 @@ class _ListPageState extends State<ListPage> {
           ),
         ),
         child: FutureBuilder(
-            future: getPost0(),
+            future: getPost1(),
             // ignore: missing_return
             builder: (_, snapshot) {
               //proitem = snapshot.data["Problem Statement"];

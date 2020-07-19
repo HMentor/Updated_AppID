@@ -4,30 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hmentor/main.dart';
+import 'package:hmentor/sendMail.dart';
 
 
-
-class Mentor extends StatefulWidget {
-  final DocumentSnapshot post;
-  Mentor({this.post});
+class feedback extends StatefulWidget {
+//  final DocumentSnapshot post;
+//  feedback({this.post});
 
   @override
-  _mentorState createState() => _mentorState();
+  _feedbackState createState() => _feedbackState();
 }
 
 // ignore: camel_case_types
-class _mentorState extends State<Mentor> {
+class _feedbackState extends State<feedback> {
 //  TextEditingController tx
-  String getValue(){
-     if(widget.post == null)
-       {
-         return null;
-       }
-     else {
-       return widget.post.data["Problem Statement"];
-     }
-
-  }
+//  String getValue(){
+//    if(widget.post == null)
+//    {
+//      return null;
+//    }
+//    else {
+//      return widget.post.data["Problem Statement"];
+//    }
+//
+//  }
 
   final _form = GlobalKey<FormState>();
   void initState() {
@@ -36,36 +36,35 @@ class _mentorState extends State<Mentor> {
   }
 
   final _emailFocusNode = FocusNode();
-  final _problemStatementNode = FocusNode();
-  final _problemDescriptionNode = FocusNode();
+  final _subject = FocusNode();
+  final _feedback_suggestion = FocusNode();
   final _nameNode = FocusNode();
   final _mobileNode = FocusNode();
 
-  var _query = UserQuery(name: '', email: '', Mobile: "", problem_statement: "",help_description: "");
+  var _query =
+      feedbackUser(name: '', email: '',Mobile: "", subject: "", feedback_suggestion: "");
 
   @override
-  void dispose(){
+  void dispose() {
     _emailFocusNode.dispose();
-    _problemDescriptionNode.dispose();
-    _problemStatementNode.dispose();
+    _subject.dispose();
+    _feedback_suggestion.dispose();
     _nameNode.dispose();
     _mobileNode.dispose();
     super.dispose();
-    getValue();
+    //getValue();
   }
 
-  Future<void> uploadingData(String name, String email,
-      String Mobile, String problem_statement, String help_description) async {
-    await Firestore.instance.collection("User Query").add({
-      'Problem Statement': problem_statement,
-      'email': email,
-      'Description': help_description,
+  Future<void> uploadingData(String name, String email, String Mobile,
+      String subject, String feedback_suggestion) async {
+    await Firestore.instance.collection("Feedback and Suggestion").add({
+      'Problem Statement': subject,
+      'Email': email,
+      'Description': feedback_suggestion,
       'Phone Number': Mobile,
-      'Name' : name,
+      'Name': name,
     });
   }
-
-
 
   void _saveForm() {
     // isValid variable is used to store the current status of form
@@ -78,63 +77,70 @@ class _mentorState extends State<Mentor> {
     //_form.currentState.save is void type expression.
     //_form.currentState.save helps to save the current state of form.
     _form.currentState.save();
-    uploadingData(_query.name,_query.email,_query.Mobile,_query.problem_statement,_query.help_description);
+    uploadingData(_query.name, _query.email, _query.Mobile, _query.subject,
+        _query.feedback_suggestion);
+    sendMail(email: _query.email,name: _query.name,subject: _query.subject,suggestion: _query.feedback_suggestion,mobile: _query.Mobile);
     showAlertDialog(context);
     print(_query.name);
     print(_query.email);
     print(_query.Mobile);
-    print(_query.problem_statement);
-    print(_query.help_description);
+    print(_query.subject);
+    print(_query.feedback_suggestion);
   }
 
-
-
   showAlertDialog(BuildContext context) {
-
     // set up the button
     Widget okButton = FlatButton(
-      child: Text("Close"),
-      onPressed: () {Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
-      );}
-    );
+        child: Text("Close"),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHomePage()),
+          );
+        });
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       scrollable: true,
-      title: Text("Query Submitted..!"),
+      title: Text("Feedback Submitted..!"),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Icon(Icons.check_circle,color: Colors.green,size: 60,),
-        Padding(
-          padding: const EdgeInsets.only(top:15.0),
-          child: Text("We will get back to you within 12 Hours"),
-        ),
-          Padding(
-            padding: const EdgeInsets.only(top:10.0),
-            child: Text("Your Name:- "+_query.name,textAlign: TextAlign.left,),
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 60,
           ),
           Padding(
-            padding: const EdgeInsets.only(top:10.0),
-            child: Text("Email:- "+_query.email),
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Text(
+                "Thank you for your valuable time. We will get back to you within 12 Hours if needed"),
           ),
           Padding(
-            padding: const EdgeInsets.only(top:10.0),
-            child: Text("Mobile:- "+_query.Mobile),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(top:8.0),
-            child: Text("Statement:- "+_query.problem_statement),
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              "Your Name:- " + _query.name,
+              textAlign: TextAlign.left,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top:8.0),
-            child: Text("Your Query:- "+_query.help_description),
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text("Email:- " + _query.email),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text("Mobile:- " + _query.Mobile),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text("Subject:- " + _query.subject),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text("Feedback/Suggestion:- " + _query.feedback_suggestion),
           )
-      ],),
-
+        ],
+      ),
       actions: [
         okButton,
       ],
@@ -149,27 +155,29 @@ class _mentorState extends State<Mentor> {
     );
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.deepOrange[500],size: 30,), onPressed: null)
+          IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.deepOrange[500],
+                size: 30,
+              ),
+              onPressed: null)
         ],
         backgroundColor: Colors.deepOrange[500],
         title: Padding(
           padding: const EdgeInsets.only(/*left: 70*/),
           child: Text(
-            "Ask to HMentor",
+            "Feedback & Suggestion",
             style: GoogleFonts.pacifico(
                 textStyle: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 25,
                     shadows: [
                   Shadow(
                       blurRadius: 6.0,
@@ -215,8 +223,14 @@ class _mentorState extends State<Mentor> {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top:20),
-                      child: Text("If You Have question, Just Ask Mentor.",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Please give your feedback or suggestions related to the Application.",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,),textAlign: TextAlign.center,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -267,17 +281,16 @@ class _mentorState extends State<Mentor> {
 
                         //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
-                          _query = UserQuery(
-                            name: value,
+                          _query = feedbackUser(
+                              name: value,
 //                            Default value i.e '' (null) is assigned to the password.
 //                            every time when saving the value, assign the value to only variable related to the text-field and keep other value as default.
-                            email: _query.email,
-                            Mobile: _query.Mobile,
-                            problem_statement: _query.problem_statement,
-                            help_description: _query.help_description
-                          );
-                         },
-                       onFieldSubmitted: (_) {
+                              email: _query.email,
+                              Mobile: _query.Mobile,
+                              subject: _query.subject,
+                              feedback_suggestion: _query.feedback_suggestion);
+                        },
+                        onFieldSubmitted: (_) {
 //                          //after pressing the enter button from keyboard, control will transfer to the next field
 //                          // next field can be requested using requestFocus
 //                          //_passFocus is focus node instance of password textformfield
@@ -347,17 +360,16 @@ class _mentorState extends State<Mentor> {
                             fontSize: 20),
                         //Here focus node is assigned
                         //though this focusNode we can control email TextFormField
-                         focusNode: _emailFocusNode,
+                        focusNode: _emailFocusNode,
 
                         //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
-                          _query = UserQuery(
+                          _query = feedbackUser(
                               name: _query.name,
                               email: value,
                               Mobile: _query.Mobile,
-                              problem_statement: _query.problem_statement,
-                              help_description: _query.help_description
-                          );
+                              subject: _query.subject,
+                              feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
                           //after pressing the enter button from keyboard, control will transfer to the next field
@@ -372,7 +384,7 @@ class _mentorState extends State<Mentor> {
                             return "This field can not be Empty";
                           }
 
-                         // EmailValidator is function of dart library that helps to validate the email id
+                          // EmailValidator is function of dart library that helps to validate the email id
                           if (!EmailValidator.validate(value, true)) {
                             return "Enter the Valid Email.";
                           }
@@ -420,7 +432,7 @@ class _mentorState extends State<Mentor> {
 
                         //Style for the input text of textFormField
                         style: TextStyle(
-                          // white color to the input text
+                            // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
@@ -430,19 +442,18 @@ class _mentorState extends State<Mentor> {
 
                         //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
-                          _query = UserQuery(
+                          _query = feedbackUser(
                               name: _query.name,
                               email: _query.email,
                               Mobile: value,
-                              problem_statement: _query.problem_statement,
-                              help_description: _query.help_description
-                          );
+                              subject: _query.subject,
+                              feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
                           //after pressing the enter button from keyboard, control will transfer to the next field
                           // next field can be requested using requestFocus
                           //_passFocus is focus node instance of password textformfield
-                          FocusScope.of(context).requestFocus(_problemStatementNode);
+                          FocusScope.of(context).requestFocus(_subject);
                         },
 
                         //validator function takes the current value from textformfield as a argument
@@ -452,7 +463,7 @@ class _mentorState extends State<Mentor> {
                           }
 
                           // EmailValidator is function of dart library that helps to validate the email id
-                          if (value.length <10 || value.length>10) {
+                          if (value.length < 10 || value.length > 10) {
                             return "Enter the Valid Mobile Number.";
                           }
                           return null;
@@ -460,12 +471,11 @@ class _mentorState extends State<Mentor> {
                       ),
                     ),
 
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 30.0, bottom: 20, top: 10),
                       child: TextFormField(
-                        controller: TextEditingController(text: getValue()),
+                        //controller: TextEditingController(text: getValue()),
                         decoration: InputDecoration(
                             errorStyle: TextStyle(
                                 color: Colors.yellow,
@@ -477,7 +487,7 @@ class _mentorState extends State<Mentor> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20)),
-                            hintText: "Problem Statement",
+                            hintText: "Subject",
                             hintStyle: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -501,29 +511,29 @@ class _mentorState extends State<Mentor> {
 
                         //Style for the input text of textFormField
                         style: TextStyle(
-                          // white color to the input text
+                            // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                         //Here focus node is assigned
                         //though this focusNode we can control email TextFormField
-                         focusNode: _problemStatementNode,
+                        focusNode: _subject,
 
                         //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
-                          _query = UserQuery(
+                          _query = feedbackUser(
                               name: _query.name,
                               email: _query.email,
                               Mobile: _query.Mobile,
-                              problem_statement: value,
-                              help_description: _query.help_description
-                          );
+                              subject: value,
+                              feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
                           //after pressing the enter button from keyboard, control will transfer to the next field
                           // next field can be requested using requestFocus
                           //_passFocus is focus node instance of password textformfield
-                          FocusScope.of(context).requestFocus(_problemDescriptionNode);
+                          FocusScope.of(context)
+                              .requestFocus(_feedback_suggestion);
                         },
 
                         //validator function takes the current value from textformfield as a argument
@@ -531,8 +541,8 @@ class _mentorState extends State<Mentor> {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
                           }
-                          if (value.length < 7) {
-                            return "Enter the complete Statement";
+                          if (value.length < 5) {
+                            return "Enter the complete subject";
                           }
 
                           //EmailValidator is function of dart library that helps to validate the email id
@@ -543,7 +553,6 @@ class _mentorState extends State<Mentor> {
                         },
                       ),
                     ),
-
 
                     Padding(
                       padding: const EdgeInsets.only(
@@ -560,7 +569,7 @@ class _mentorState extends State<Mentor> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20)),
-                            hintText: "Help Description",
+                            hintText: "Feedback/Suggestion",
                             hintStyle: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -584,23 +593,22 @@ class _mentorState extends State<Mentor> {
 
                         //Style for the input text of textFormField
                         style: TextStyle(
-                          // white color to the input text
+                            // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                         //Here focus node is assigned
                         //though this focusNode we can control email TextFormField
-                         focusNode: _problemDescriptionNode,
+                        focusNode: _feedback_suggestion,
 
                         //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
-                          _query = UserQuery(
+                          _query = feedbackUser(
                               name: _query.name,
                               email: _query.email,
                               Mobile: _query.Mobile,
-                              problem_statement: _query.problem_statement,
-                              help_description: value
-                          );
+                              subject: _query.subject,
+                              feedback_suggestion: value);
                         },
                         onFieldSubmitted: (_) {
                           //after pressing the enter button from keyboard, control will transfer to the next field
@@ -616,8 +624,8 @@ class _mentorState extends State<Mentor> {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
                           }
-                          if (value.length < 15) {
-                            return "Enter the Brief Problem Description";
+                          if (value.length < 7) {
+                            return "Enter the Brief Suggestion";
                           }
 
                           //EmailValidator is function of dart library that helps to validate the email id
@@ -629,11 +637,9 @@ class _mentorState extends State<Mentor> {
                       ),
                     ),
 
-
-
                     //here InkWell is used for splashColors
                     InkWell(
-                       onTap: _saveForm,
+                      onTap: _saveForm,
                       splashColor: Colors.grey,
                       child: Container(
                         width: 300,
@@ -665,14 +671,18 @@ class _mentorState extends State<Mentor> {
                             Padding(
                               padding: const EdgeInsets.only(right: 15.0),
                               child: Text(
-                                'Ask HMentor',
+                                'Send It',
                                 style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green),
                               ),
                             ),
-                            Icon(Icons.face,size: 40,color: Colors.deepOrangeAccent,)
+                            Icon(
+                              Icons.face,
+                              size: 40,
+                              color: Colors.deepOrangeAccent,
+                            )
                           ],
                         ),
                       ),
@@ -807,19 +817,18 @@ class _mentorState extends State<Mentor> {
   }
 }
 
-class UserQuery{
+class feedbackUser {
   final String name;
   final String email;
   final String Mobile;
-  final String help_description;
-  final String problem_statement;
+  final String subject;
+  final String feedback_suggestion;
 
-
-  UserQuery({
+  feedbackUser({
     this.name,
     this.email,
     this.Mobile,
-    this.problem_statement,
-    this.help_description,
+    this.subject,
+    this.feedback_suggestion,
   });
 }

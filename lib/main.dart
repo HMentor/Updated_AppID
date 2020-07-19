@@ -5,6 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:hmentor/About.dart';
 import 'package:hmentor/ListPage.dart';
+import 'package:hmentor/ListPage2.dart';
+import 'package:hmentor/ListPage3.dart';
+import 'package:hmentor/ListPage4.dart';
+import 'package:hmentor/ListPage5.dart';
+import 'package:hmentor/ListPage6.dart';
+import 'package:hmentor/ListPage7.dart';
+import 'package:hmentor/ListPage8.dart';
+import 'package:hmentor/ListPage9.dart';
+import 'package:hmentor/SplashScreen.dart';
 import 'package:hmentor/mentor.dart';
 
 void main() async {
@@ -24,7 +33,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new SplashScreen(), routes: <String, WidgetBuilder>{
+      '/HomeScreen': (BuildContext context) => new MyHomePage()
+    },
+      //MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -55,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   TabController _tabController;
 
-  int _counter = 0;
+  int _counter= 0;
 //  int _currentIndex = 0;
 
 
@@ -258,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage>
 
           TabBarView(
            // physics: PageScrollPhysics(),
-            physics: NeverScrollableScrollPhysics(),
+           // physics: NeverScrollableScrollPhysics(),
             children: [
 
                 
@@ -294,7 +306,7 @@ class _MyHomePageState extends State<MyHomePage>
               SingleChildScrollView(
                 child: Container(
                   height: MediaQuery.of(context).size.height,
-                  child: ListPage(icounter: _counter),
+                  child: ListPage(),
                 ),
               ),
 
@@ -333,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage>
                   SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage2(),
                       ),
                     ),
 
@@ -376,7 +388,7 @@ class _MyHomePageState extends State<MyHomePage>
                      SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage3(),
                       ),
                     ),
                   //),
@@ -391,7 +403,7 @@ class _MyHomePageState extends State<MyHomePage>
                       dragStartBehavior: DragStartBehavior.start,
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage4(),
                       ),
                     ),
 
@@ -406,7 +418,7 @@ class _MyHomePageState extends State<MyHomePage>
                       dragStartBehavior: DragStartBehavior.start,
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage5(),
                       ),
                     ),
                   //),
@@ -420,7 +432,7 @@ class _MyHomePageState extends State<MyHomePage>
                   SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage6(),
                       ),
                     ),
                   //),
@@ -434,7 +446,7 @@ class _MyHomePageState extends State<MyHomePage>
                     SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage7(),
                       ),
                     ),
                   //),
@@ -448,7 +460,7 @@ class _MyHomePageState extends State<MyHomePage>
                       SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage8(),
                       ),
                     ),
               //    ),
@@ -462,7 +474,7 @@ class _MyHomePageState extends State<MyHomePage>
                  SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        child: ListPage(icounter: _counter),
+                        child: ListPage9(),
                       ),
                     ),
                   //),

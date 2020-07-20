@@ -1,41 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'DetaiPage.dart';
-
-class ListPage8 extends StatefulWidget {
+import 'package:hmentor/DetaiPage.dart';
+class ListPage3 extends StatefulWidget {
   @override
-  _ListPage8State createState() => _ListPage8State();
+  _ListPage3State createState() => _ListPage3State();
 }
-
 TextEditingController editingController;
-
-class _ListPage8State extends State<ListPage8> {
+Future Quota;
+class _ListPage3State extends State<ListPage3> {
   navigateToDetail(DocumentSnapshot post) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DetailPage(
                   post: post,
-                )));
-  }
-
-  Future getPost1() async {
+                )));}
+       Future getPost1() async {
     var firestore = Firestore.instance;
-    // else{
-    //if(widget.currentIndex ==2 && widget.icounter==0) {
     QuerySnapshot qn =
-        await firestore.collection("Misce Based Medium").getDocuments();
+        await firestore.collection("Mobile Based Hard").getDocuments();
     return qn.documents;
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Quota = getPost1();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text("Mobile Hard"),),
-      // ignore: missing_return
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -51,7 +47,7 @@ class _ListPage8State extends State<ListPage8> {
           ),
         ),
         child: FutureBuilder(
-            future: getPost1(),
+            future: Quota,
             // ignore: missing_return
             builder: (_, snapshot) {
               //proitem = snapshot.data["Problem Statement"];
@@ -74,7 +70,6 @@ class _ListPage8State extends State<ListPage8> {
                         color: Colors.white,
                         child: ListTile(
                           title: Text(
-                            /*"Problem Statement:- " +"\n"+*/
                            "$index. "+ snapshot.data[index].data["Problem Statement"],
                             style: TextStyle(
                                 fontSize: 18.0,

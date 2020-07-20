@@ -5,30 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hmentor/main.dart';
 
-
-
 class feedback extends StatefulWidget {
-//  final DocumentSnapshot post;
-//  feedback({this.post});
-
   @override
   _feedbackState createState() => _feedbackState();
 }
 
-// ignore: camel_case_types
 class _feedbackState extends State<feedback> {
-//  TextEditingController tx
-//  String getValue(){
-//    if(widget.post == null)
-//    {
-//      return null;
-//    }
-//    else {
-//      return widget.post.data["Problem Statement"];
-//    }
-//
-//  }
-
   final _form = GlobalKey<FormState>();
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
@@ -40,10 +22,8 @@ class _feedbackState extends State<feedback> {
   final _feedback_suggestion = FocusNode();
   final _nameNode = FocusNode();
   final _mobileNode = FocusNode();
-
-  var _query =
-      feedbackUser(name: '', email: '',Mobile: "", subject: "", feedback_suggestion: "");
-
+  var _query = feedbackUser(
+      name: '', email: '', Mobile: "", subject: "", feedback_suggestion: "");
   @override
   void dispose() {
     _emailFocusNode.dispose();
@@ -57,7 +37,11 @@ class _feedbackState extends State<feedback> {
 
   Future<void> uploadingData(String name, String email, String Mobile,
       String subject, String feedback_suggestion) async {
-    await Firestore.instance.collection("User").document(_query.email).collection("Feedback&Suggestion").add({
+    await Firestore.instance
+        .collection("User")
+        .document(_query.email)
+        .collection("Feedback&Suggestion")
+        .add({
       'Problem Statement': subject,
       'Email': email,
       'Description': feedback_suggestion,
@@ -67,15 +51,11 @@ class _feedbackState extends State<feedback> {
   }
 
   void _saveForm() {
-    // isValid variable is used to store the current status of form
-    // _form.currentState.Validate() return the boolean value.
     final isValid = _form.currentState.validate();
     print(isValid);
     if (!isValid) {
       return;
     }
-    //_form.currentState.save is void type expression.
-    //_form.currentState.save helps to save the current state of form.
     _form.currentState.save();
     uploadingData(_query.name, _query.email, _query.Mobile, _query.subject,
         _query.feedback_suggestion);
@@ -97,8 +77,6 @@ class _feedbackState extends State<feedback> {
             MaterialPageRoute(builder: (context) => MyHomePage()),
           );
         });
-
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       scrollable: true,
       title: Text("Feedback Submitted..!"),
@@ -144,8 +122,6 @@ class _feedbackState extends State<feedback> {
         okButton,
       ],
     );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -190,11 +166,8 @@ class _feedbackState extends State<feedback> {
         child: Column(
           children: <Widget>[
             Container(
-              //To Adjust with every device screen MediaQuery used
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-
-              //decoration for circular radius of Container
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -212,12 +185,7 @@ class _feedbackState extends State<feedback> {
                     bottomLeft: Radius.circular(185),
                     bottomRight: Radius.circular(185),
                   )),
-
-              //Form is used to taking the user input in form manner
-
               child: Form(
-                //global form key is used to control the behavior of form.
-                //key is used as controller of form
                 key: _form,
                 child: Column(
                   children: <Widget>[
@@ -226,9 +194,11 @@ class _feedbackState extends State<feedback> {
                       child: Text(
                         "Please give your feedback or suggestions related to the Application.",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,),textAlign: TextAlign.center,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     Padding(
@@ -261,42 +231,25 @@ class _feedbackState extends State<feedback> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20))),
-
-                        //textInputAction property provides the buttons on the right bottom corners of KEYBOARD
-                        //in this case next button will provided on keyboard
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.blue,
                         keyboardType: TextInputType.text,
-
-                        //Style for the input text of textFormField
                         style: TextStyle(
                             // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        //Here focus node is assigned
-                        //though this focusNode we can control email TextFormField
-                        // focusNode: _emailFocusNode,
-
-                        //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
                           _query = feedbackUser(
                               name: value,
-//                            Default value i.e '' (null) is assigned to the password.
-//                            every time when saving the value, assign the value to only variable related to the text-field and keep other value as default.
                               email: _query.email,
                               Mobile: _query.Mobile,
                               subject: _query.subject,
                               feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
-//                          //after pressing the enter button from keyboard, control will transfer to the next field
-//                          // next field can be requested using requestFocus
-//                          //_passFocus is focus node instance of password textformfield
                           FocusScope.of(context).requestFocus(_emailFocusNode);
                         },
-
-                        //validator function takes the current value from textformfield as a argument
                         validator: (value) {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
@@ -304,16 +257,10 @@ class _feedbackState extends State<feedback> {
                           if (value.length < 5) {
                             return "Enter the correct name";
                           }
-
-                          //EmailValidator is function of dart library that helps to validate the email id
-//                          if (!EmailValidator.validate(value, true)) {
-//                            return "Enter the Valid Email.";
-//                          }
                           return null;
                         },
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 30.0, bottom: 20, top: 10),
@@ -344,24 +291,14 @@ class _feedbackState extends State<feedback> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20))),
-
-                        //textInputAction property provides the buttons on the right bottom corners of KEYBOARD
-                        //in this case next button will provided on keyboard
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.blue,
                         keyboardType: TextInputType.emailAddress,
-
-                        //Style for the input text of textFormField
                         style: TextStyle(
-                            // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        //Here focus node is assigned
-                        //though this focusNode we can control email TextFormField
                         focusNode: _emailFocusNode,
-
-                        //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
                           _query = feedbackUser(
                               name: _query.name,
@@ -371,19 +308,12 @@ class _feedbackState extends State<feedback> {
                               feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
-                          //after pressing the enter button from keyboard, control will transfer to the next field
-                          // next field can be requested using requestFocus
-                          //_passFocus is focus node instance of password textformfield
                           FocusScope.of(context).requestFocus(_mobileNode);
                         },
-
-                        //validator function takes the current value from textformfield as a argument
                         validator: (value) {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
                           }
-
-                          // EmailValidator is function of dart library that helps to validate the email id
                           if (!EmailValidator.validate(value, true)) {
                             return "Enter the Valid Email.";
                           }
@@ -391,7 +321,6 @@ class _feedbackState extends State<feedback> {
                         },
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 30.0, bottom: 20, top: 10),
@@ -422,24 +351,15 @@ class _feedbackState extends State<feedback> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20))),
-
-                        //textInputAction property provides the buttons on the right bottom corners of KEYBOARD
-                        //in this case next button will provided on keyboard
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.blue,
                         keyboardType: TextInputType.phone,
-
-                        //Style for the input text of textFormField
                         style: TextStyle(
                             // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        //Here focus node is assigned
-                        //though this focusNode we can control email TextFormField
                         focusNode: _mobileNode,
-
-                        //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
                           _query = feedbackUser(
                               name: _query.name,
@@ -449,19 +369,12 @@ class _feedbackState extends State<feedback> {
                               feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
-                          //after pressing the enter button from keyboard, control will transfer to the next field
-                          // next field can be requested using requestFocus
-                          //_passFocus is focus node instance of password textformfield
                           FocusScope.of(context).requestFocus(_subject);
                         },
-
-                        //validator function takes the current value from textformfield as a argument
                         validator: (value) {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
                           }
-
-                          // EmailValidator is function of dart library that helps to validate the email id
                           if (value.length < 10 || value.length > 10) {
                             return "Enter the Valid Mobile Number.";
                           }
@@ -469,12 +382,10 @@ class _feedbackState extends State<feedback> {
                         },
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 30.0, bottom: 20, top: 10),
                       child: TextFormField(
-                        //controller: TextEditingController(text: getValue()),
                         decoration: InputDecoration(
                             errorStyle: TextStyle(
                                 color: Colors.yellow,
@@ -501,24 +412,14 @@ class _feedbackState extends State<feedback> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20))),
-
-                        //textInputAction property provides the buttons on the right bottom corners of KEYBOARD
-                        //in this case next button will provided on keyboard
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.blue,
                         keyboardType: TextInputType.multiline,
-
-                        //Style for the input text of textFormField
                         style: TextStyle(
-                            // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        //Here focus node is assigned
-                        //though this focusNode we can control email TextFormField
                         focusNode: _subject,
-
-                        //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
                           _query = feedbackUser(
                               name: _query.name,
@@ -528,14 +429,9 @@ class _feedbackState extends State<feedback> {
                               feedback_suggestion: _query.feedback_suggestion);
                         },
                         onFieldSubmitted: (_) {
-                          //after pressing the enter button from keyboard, control will transfer to the next field
-                          // next field can be requested using requestFocus
-                          //_passFocus is focus node instance of password textformfield
                           FocusScope.of(context)
                               .requestFocus(_feedback_suggestion);
                         },
-
-                        //validator function takes the current value from textformfield as a argument
                         validator: (value) {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
@@ -543,16 +439,11 @@ class _feedbackState extends State<feedback> {
                           if (value.length < 5) {
                             return "Enter the complete subject";
                           }
-
-                          //EmailValidator is function of dart library that helps to validate the email id
-//                          if (!EmailValidator.validate(value, true)) {
-//                            return "Enter the Valid Email.";
 //                          }
                           return null;
                         },
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 30.0, bottom: 20, top: 10),
@@ -583,24 +474,15 @@ class _feedbackState extends State<feedback> {
                                     style: BorderStyle.solid,
                                     width: 3),
                                 borderRadius: BorderRadius.circular(20))),
-
-                        //textInputAction property provides the buttons on the right bottom corners of KEYBOARD
-                        //in this case next button will provided on keyboard
                         textInputAction: TextInputAction.next,
                         cursorColor: Colors.blue,
                         keyboardType: TextInputType.multiline,
-
-                        //Style for the input text of textFormField
                         style: TextStyle(
                             // white color to the input text
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        //Here focus node is assigned
-                        //though this focusNode we can control email TextFormField
                         focusNode: _feedback_suggestion,
-
-                        //When save button pressed form keyboard the value of text-field is assigned to the email
                         onSaved: (value) {
                           _query = feedbackUser(
                               name: _query.name,
@@ -610,15 +492,9 @@ class _feedbackState extends State<feedback> {
                               feedback_suggestion: value);
                         },
                         onFieldSubmitted: (_) {
-                          //after pressing the enter button from keyboard, control will transfer to the next field
-                          // next field can be requested using requestFocus
-                          //_passFocus is focus node instance of password textformfield
-                          //FocusScope.of(context).requestFocus(_passFocusNode);
                           _saveForm();
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
-
-                        //validator function takes the current value from textformfield as a argument
                         validator: (value) {
                           if (value.isEmpty) {
                             return "This field can not be Empty";
@@ -626,17 +502,10 @@ class _feedbackState extends State<feedback> {
                           if (value.length < 7) {
                             return "Enter the Brief Suggestion";
                           }
-
-                          //EmailValidator is function of dart library that helps to validate the email id
-//                          if (!EmailValidator.validate(value, true)) {
-//                            return "Enter the Valid Email.";
-//                          }
                           return null;
                         },
                       ),
                     ),
-
-                    //here InkWell is used for splashColors
                     InkWell(
                       onTap: _saveForm,
                       splashColor: Colors.grey,
@@ -652,8 +521,6 @@ class _feedbackState extends State<feedback> {
                                   blurRadius: 25.0,
                                   spreadRadius: 5.0,
                                   color: Colors.yellow,
-                                  //offset is used for distancing of shadow from text.
-                                  //offset shadows goes into right bottom
                                   offset: Offset(1, 1))
                             ]),
                         child: Row(
@@ -662,7 +529,7 @@ class _feedbackState extends State<feedback> {
                             Padding(
                               padding: const EdgeInsets.only(right: 15.0),
                               child: Icon(
-                                Icons.face,
+                                Icons.send,
                                 size: 40,
                                 color: Colors.deepOrangeAccent,
                               ),
@@ -678,7 +545,7 @@ class _feedbackState extends State<feedback> {
                               ),
                             ),
                             Icon(
-                              Icons.face,
+                              Icons.send,
                               size: 40,
                               color: Colors.deepOrangeAccent,
                             )
@@ -686,129 +553,10 @@ class _feedbackState extends State<feedback> {
                         ),
                       ),
                     ),
-//                    Padding(
-//                      padding: const EdgeInsets.only(top: 10.0),
-//                      child: Text("Forget Password ?",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white,),),
-//                    ),
-//                    //Expanded property is used here for preventing the exception of renderFlex
-//                    //****************Exception will Be like Below****************
-//                    //The overflowing RenderFlex has an orientation of Axis.horizontal.
-//                    //The edge of the RenderFlex that is overflowing has been marked in the rendering
-//                    // with a yellow and black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
-//                    //Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the RenderFlex to fit
-//                    // within the available space instead of being sized to their natural size.
-//                    //This is considered an error condition because it indicates that there is content that cannot be seen.
-//                    // If the content is legitimately bigger than the available space, consider clipping it with a ClipRect widget
-//                    // before putting it in the flex, or using a scrollable container rather than a Flex, like a ListView.
-//                    // Expanded(
-//                    // child:
-//                    Column(
-//                        mainAxisAlignment: MainAxisAlignment.center,
-//                        crossAxisAlignment: CrossAxisAlignment.center,
-//                        children: <Widget>[
-//                          Row(
-//                            mainAxisAlignment: MainAxisAlignment.center,
-//                            children: <Widget>[
-//                              Padding(
-//                                padding: const EdgeInsets.only(top: 40.0),
-//                                child: Text(
-//                                  "Don't Have Account?",
-//                                  style: TextStyle(
-//                                      color: Colors.white, fontSize: 20),
-//                                ),
-//                              ),
-//                              Padding(
-//                                padding: const EdgeInsets.only(top: 40.0),
-//                                child: InkWell(
-////                                  onTap: () => Navigator.push(
-////                                      context, new MaterialPageRoute(
-////                                      builder: (context) => new RegistrationRoleSelection())),
-//                                  splashColor: Colors.cyanAccent,
-//                                  child: Text(
-//                                    " SIGN UP NOW",
-//                                    style: TextStyle(
-//                                        color: Colors.white,
-//                                        fontSize: 20,
-//                                        fontWeight: FontWeight.bold,
-//                                        shadows: [
-//                                          Shadow(
-//                                              blurRadius: 6.0,
-//                                              color: Colors.black,
-//                                              offset: Offset(5.0, 5.0))
-//                                        ]),
-//                                  ),
-//                                ),
-//                              )
-//                            ],
-//                          ),
-//                          Padding(
-//                            padding: const EdgeInsets.all(10.0),
-//                            child: Text('For Role',style: TextStyle(
-//                                color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),
-//                          ),
-//                          GestureDetector(
-//                            onTap: () {
-////                             if(_currentIndex == 0){
-////                                Navigator.push(
-////                                    context, new MaterialPageRoute(
-////                                    builder: (context) => new MyLoginApp()));
-////                              }
-//                            },
-//                            child: Container(
-//                              width: MediaQuery.of(context).size.width/1.4,
-//                              height: 40,
-//                              margin: EdgeInsets.only(top: 20,bottom: 20),
-//                              decoration: BoxDecoration(
-//
-//                                  color: Colors.white,
-//                                  borderRadius: BorderRadius.circular(50),
-//                                  boxShadow: [
-//                                    BoxShadow(
-//                                        blurRadius: 25.0,
-//                                        spreadRadius: 5.0,
-//                                        color: Colors.yellow,
-//
-//                                        //offset is used for distancing of shadow from text.
-//                                        //offset shadows goes into right bottom
-//                                        offset: Offset(1, 1))
-//                                  ]),
-////                              child: Text(
-////
-////                                _options[_currentIndex],
-////                                style: TextStyle(
-////                                  color: Colors.deepOrangeAccent,
-////                                  fontSize: 35,
-////                                  fontWeight: FontWeight.bold,),textAlign: TextAlign.center,
-////                              ),
-//                            ),
-//                          ),
-//                          Text(
-//                            "Choose Your Role From Below",
-//                            style: TextStyle(
-//                              fontSize: 20,
-//                              fontWeight: FontWeight.bold,
-//                              color: Colors.white,),
-//                          ),
-//                          Icon(Icons.arrow_downward,color: Colors.white,size: 20,)
-//                        ]),
-//                    //),
                   ],
                 ),
               ),
             ),
-            //Container(
-            // width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height / 2,
-
-            //decoration for circular radius of Container
-            //  decoration: BoxDecoration(
-            //     color: Colors.pinkAccent,
-            //    borderRadius: BorderRadius.only(
-            //      topLeft: Radius.circular(-10),
-            //     topRight: Radius.circular(-10),
-            //   )),
-
-            //  )
           ],
         ),
       ),

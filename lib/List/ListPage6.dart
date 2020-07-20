@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'DetaiPage.dart';
-
-class ListPage2 extends StatefulWidget {
+import 'package:hmentor/DetaiPage.dart';
+class ListPage6 extends StatefulWidget {
   @override
-  _ListPage2State createState() => _ListPage2State();
+  _ListPage6State createState() => _ListPage6State();
 }
-
+Future Quota;
 TextEditingController editingController;
-
-class _ListPage2State extends State<ListPage2> {
+class _ListPage6State extends State<ListPage6> {
   navigateToDetail(DocumentSnapshot post) {
     Navigator.push(
         context,
@@ -20,23 +17,21 @@ class _ListPage2State extends State<ListPage2> {
                   post: post,
                 )));
   }
-
-  // ignore: missing_return
   Future getPost1() async {
     var firestore = Firestore.instance;
-    // else{
-    //if(widget.currentIndex ==2 && widget.icounter==0) {
     QuerySnapshot qn =
-        await firestore.collection("Mobile Based Medium").getDocuments();
+        await firestore.collection("Web Based Hard").getDocuments();
     return qn.documents;
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Quota = getPost1();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text("Mobile Hard"),),
-      // ignore: missing_return
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -52,13 +47,11 @@ class _ListPage2State extends State<ListPage2> {
           ),
         ),
         child: FutureBuilder(
-            future: getPost1(),
+            future: Quota,
             // ignore: missing_return
             builder: (_, snapshot) {
-              //proitem = snapshot.data["Problem Statement"];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                  //height: MediaQuery.of(context).size.height,
                   alignment: Alignment.topCenter,
                   child: Image.asset("assets/LOAD.gif"),
                 );
@@ -75,7 +68,6 @@ class _ListPage2State extends State<ListPage2> {
                         color: Colors.white,
                         child: ListTile(
                           title: Text(
-                            /*"Problem Statement:- " +"\n"+*/
                             "$index. "+snapshot.data[index].data["Problem Statement"],
                             style: TextStyle(
                                 fontSize: 18.0,

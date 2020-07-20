@@ -2,15 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-
 import 'package:hmentor/mentor.dart';
 
 class DetailPage extends StatefulWidget {
   final DocumentSnapshot post;
-
   DetailPage({this.post});
-
-
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -30,7 +26,10 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepOrange[400],
-        title: Text(widget.post.data['Owner'],style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        title: Text(
+          widget.post.data['Owner'],
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -47,43 +46,93 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
         child: Card(
-
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(20.0),),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
           child: ListView(
             padding: EdgeInsets.all(15.0),
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              Text(
-                "Owner:- " + widget.post.data["Owner"],
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              RichText(
+                text: TextSpan(
+                    text: "Owner:- ",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                          text: widget.post.data["Owner"],
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal))
+                    ]),
               ),
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                "Problem Statement:- " + widget.post.data["Problem Statement"],
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              Divider(thickness: 1,color: Colors.black,),
+              RichText(
+                text: TextSpan(
+                    text: "Problem Statement:- ",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                          text: widget.post.data["Problem Statement"],
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal))
+                    ]),
               ),
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                "Description:- " + widget.post.data["Description"],
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              Divider(thickness: 1,color: Colors.black,),
+              RichText(
+                text: TextSpan(
+                    text: "Description:- ",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                          text: widget.post.data["Description"],
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal))
+                    ]),
               ),
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                "Required Skills:- " + widget.post.data["Required Skill"],
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              Divider(thickness: 1,color: Colors.black,),
+              RichText(
+                text: TextSpan(
+                    text: "Required Skills:- ",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                          text: widget.post.data["Required Skill"],
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal))
+                    ]),
               ),
               SizedBox(
                 height: 10.0,
               ),
-              // Text(widget.post.data["Youtube Link"], style: TextStyle(fontSize: 18.0, color: Colors.black),),
-
+              Divider(thickness: 1,color: Colors.black,),
               Padding(
                 padding: const EdgeInsets.only(),
                 child: Row(
@@ -118,8 +167,6 @@ class _DetailPageState extends State<DetailPage> {
                               onPressed: () {
                                 Clipboard.setData(
                                     ClipboardData(text: Youtube()));
-
-
                               },
                             )
                           ],
@@ -127,7 +174,6 @@ class _DetailPageState extends State<DetailPage> {
                       )
                     ]),
               ),
-
               SizedBox(
                 height: 20.0,
               ),
@@ -148,7 +194,8 @@ class _DetailPageState extends State<DetailPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Mentor(post: widget.post)),
+                      MaterialPageRoute(
+                          builder: (context) => Mentor(post: widget.post)),
                     );
                   }),
             ],
@@ -157,6 +204,4 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
-
-
 }

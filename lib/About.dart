@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hmentor/banner.dart';
 import 'package:hmentor/feedback.dart';
 import 'package:share/share.dart';
 
 class About extends StatefulWidget {
   @override
   _AboutState createState() => _AboutState();
-
 }
 
 class _AboutState extends State<About> {
@@ -279,17 +278,21 @@ class _AboutState extends State<About> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                      child: Text(
-                                    "Share to your Friend",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),onTap: () {
-                                    final RenderBox box = context.findRenderObject();
-                                    Share.share("www.google.com",
-                                        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-
-                                  },),
+                                    child: Text(
+                                      "Share to your Friend",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onTap: () {
+                                      final RenderBox box =
+                                          context.findRenderObject();
+                                      Share.share("www.google.com",
+                                          sharePositionOrigin:
+                                              box.localToGlobal(Offset.zero) &
+                                                  box.size);
+                                    },
+                                  ),
                                 ],
                               ),
                             )
@@ -297,36 +300,40 @@ class _AboutState extends State<About> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left:5.0,top: 25),
+                        padding: const EdgeInsets.only(left: 5.0, top: 25),
                         child: Row(
                           children: [
                             Icon(
-                                Icons.feedback,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-
+                              Icons.feedback,
+                              color: Colors.black,
+                              size: 30,
+                            ),
                             Padding(
-                              padding: const EdgeInsets.only(left:10.0,),
+                              padding: const EdgeInsets.only(
+                                left: 10.0,
+                              ),
                               child: InkWell(
                                 child: Text(
                                   "Feedback and Suggestion",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
-                                ),onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => feedback()),
-                              ),),
+                                ),
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => feedback()),
+                                ),
+                              ),
                             )
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ),
+              BannerAdPage()
             ],
           ),
         ),

@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'DetaiPage.dart';
-
-class ListPage5 extends StatefulWidget {
+import 'package:hmentor/DetaiPage.dart';
+class ListPage extends StatefulWidget {
   @override
-  _ListPage5State createState() => _ListPage5State();
+  _ListPageState createState() => _ListPageState();
 }
-
 TextEditingController editingController;
-
-class _ListPage5State extends State<ListPage5> {
+class _ListPageState extends State<ListPage> {
+  int counter = 1;
+  Future Quota;
   navigateToDetail(DocumentSnapshot post) {
     Navigator.push(
         context,
@@ -20,23 +18,23 @@ class _ListPage5State extends State<ListPage5> {
                   post: post,
                 )));
   }
-
-  Future getPost1() async {
+  Future getPost0() async {
     var firestore = Firestore.instance;
-    // else{
-    //if(widget.currentIndex ==2 && widget.icounter==0) {
-    QuerySnapshot qn =
-        await firestore.collection("Web Based Medium").getDocuments();
-    return qn.documents;
-  }
 
+    QuerySnapshot mixh =
+        await firestore.collection("Mobile Based Simple").getDocuments();
+    return mixh.documents;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Quota = getPost0();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text("Mobile Hard"),),
-      // ignore: missing_return
-
-      body: Container(
+ body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -51,13 +49,10 @@ class _ListPage5State extends State<ListPage5> {
           ),
         ),
         child: FutureBuilder(
-            future: getPost1(),
-            // ignore: missing_return
+            future: Quota,
             builder: (_, snapshot) {
-              //proitem = snapshot.data["Problem Statement"];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                  //height: MediaQuery.of(context).size.height,
                   alignment: Alignment.topCenter,
                   child: Image.asset("assets/LOAD.gif"),
                 );
@@ -74,8 +69,7 @@ class _ListPage5State extends State<ListPage5> {
                         color: Colors.white,
                         child: ListTile(
                           title: Text(
-                            /*"Problem Statement:- " +"\n"+*/
-                            "$index. "+snapshot.data[index].data["Problem Statement"],
+                            "$index. " + snapshot.data[index].data["Problem Statement"],
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
@@ -95,13 +89,11 @@ class _ListPage5State extends State<ListPage5> {
                                   onPressed: () =>
                                       navigateToDetail(snapshot.data[index]),
                                   label: Text("SeeMore"),
-                                  icon: Icon(Icons.arrow_right))
-                            ],
+                                  icon: Icon(Icons.arrow_right))],
                           ),
                         ),
                       );
-                    });
-              }
+                    });}
             }),
       ),
     );

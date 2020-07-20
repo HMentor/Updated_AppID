@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:hmentor/About.dart';
-import 'package:hmentor/ListPage.dart';
-import 'package:hmentor/ListPage2.dart';
-import 'package:hmentor/ListPage3.dart';
-import 'package:hmentor/ListPage4.dart';
-import 'package:hmentor/ListPage5.dart';
-import 'package:hmentor/ListPage6.dart';
-import 'package:hmentor/ListPage7.dart';
-import 'package:hmentor/ListPage8.dart';
-import 'package:hmentor/ListPage9.dart';
+import 'package:hmentor/List/ListPage.dart';
+import 'package:hmentor/List/ListPage2.dart';
+import 'package:hmentor/List/ListPage3.dart';
+import 'package:hmentor/List/ListPage4.dart';
+import 'package:hmentor/List/ListPage5.dart';
+import 'package:hmentor/List/ListPage6.dart';
+import 'package:hmentor/List/ListPage7.dart';
+import 'package:hmentor/List/ListPage8.dart';
+import 'package:hmentor/List/ListPage9.dart';
 import 'package:hmentor/SplashScreen.dart';
+import 'package:hmentor/banner.dart';
 import 'package:hmentor/mentor.dart';
 
 void main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: new SplashScreen(), routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => new MyHomePage()
+      '/HomeScreen': (BuildContext context) => new MyHomePage(),
     },
       //MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -52,31 +53,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-//  List<String> _options = [
-//    "Simple",
-//    "Medium",
-//    "Hard",
-//  ];
-
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
-
-
   TabController _tabController;
-
   int _counter= 0;
-//  int _currentIndex = 0;
-
-
   @override
   void initState() {
     _tabController = new TabController(length: 9, vsync: this);
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,11 +100,7 @@ class _MyHomePageState extends State<MyHomePage>
         ],
         bottom: TabBar(
           onTap: (int index){ setState(() {
-            _counter = index;
-
-
-          });},
-
+            _counter = index;});},
           isScrollable: true,
          // isScrollable: true,
           labelPadding: EdgeInsets.only(top: 12, right: 30, left: 50),
@@ -137,7 +121,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             ),
-
             new Tab(
               child: Column(
                 children: [
@@ -148,11 +131,7 @@ class _MyHomePageState extends State<MyHomePage>
                   Text(
                     "Mobile Dev Medium",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  )
-                ],
-              ),
-            ),
-
+                  )],),),
             new Tab(
               child: Column(
                 children: [
@@ -181,8 +160,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             ),
-
-
             new Tab(
               child: Column(
                 children: [
@@ -197,8 +174,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             ),
-
-
             new Tab(
               child: Column(
                 children: [
@@ -213,7 +188,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             ),
-
             new Tab(
               child: Column(
                 children: [
@@ -228,7 +202,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             ),
-
             new Tab(
               child: Column(
                 children: [
@@ -243,7 +216,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             ),
-
             new Tab(
               child: Column(
                 children: [
@@ -258,7 +230,6 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
             )
-
           ],
           controller: _tabController,
           indicatorColor: Colors.white,
@@ -267,138 +238,35 @@ class _MyHomePageState extends State<MyHomePage>
         bottomOpacity: 1,
       ),
       body:
-
-          TabBarView(
+      TabBarView(
            // physics: PageScrollPhysics(),
            // physics: NeverScrollableScrollPhysics(),
             children: [
 
-                
-
-//                  Container(
-//                    alignment: Alignment.center,
-//                    width: MediaQuery.of(context).size.width / 1.4,
-//                   height: MediaQuery.of(context).size.height/15,
-//                    margin: EdgeInsets.only(top: 20, bottom: 20),
-//                    decoration: BoxDecoration(
-//                        color: Colors.white,
-//                        borderRadius: BorderRadius.circular(50),
-//                        boxShadow: [
-//                          BoxShadow(
-//                              blurRadius: 25.0,
-//                              spreadRadius: 5.0,
-//                              color: Colors.deepOrangeAccent,
-//
-//                              //offset is used for distancing of shadow from text.
-//                              //offset shadows goes into right bottom
-//                              offset: Offset(1, 1))
-//                        ]),
-//                    child: Text(
-//                      _options[_currentIndex],
-//                      style: TextStyle(
-//                        color: Colors.deepOrangeAccent,
-//                        fontSize: 35,
-//                        fontWeight: FontWeight.bold,
-//                      ), //textAlign: TextAlign.center,
-//                    ),
-//                  ),
-
               SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: ListPage(),
+
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: ListPage(),
+                    ),
+                    BannerAdPage()
+                  ],
                 ),
               ),
-
-
-
-
-
-//                  Container(
-//
-//                    alignment: Alignment.center,
-//                    width: MediaQuery.of(context).size.width / 1.4,
-//                    height: MediaQuery.of(context).size.height/15,
-//                    margin: EdgeInsets.only(top: 20, bottom: 20),
-//                    decoration: BoxDecoration(
-//                        color: Colors.white,
-//                        borderRadius: BorderRadius.circular(50),
-//                        boxShadow: [
-//                          BoxShadow(
-//                              blurRadius: 25.0,
-//                              spreadRadius: 5.0,
-//                              color: Colors.deepOrangeAccent,
-//
-//                              //offset is used for distancing of shadow from text.
-//                              //offset shadows goes into right bottom
-//                              offset: Offset(1, 1))
-//                        ]),
-//                    child: Text(
-//                      _options[_currentIndex],
-//                      style: TextStyle(
-//                        color: Colors.deepOrangeAccent,
-//                        fontSize: 35,
-//                        fontWeight: FontWeight.bold,
-//                      ), //textAlign: TextAlign.center,
-//                    ),
-//                  ),
                   SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage2(),
                       ),
                     ),
-
-
-
-
-
-              //Column(
-               // children: [
-//                  Container(
-//
-//                    alignment: Alignment.center,
-//                    width: MediaQuery.of(context).size.width / 1.4,
-//                    height: MediaQuery.of(context).size.height/15,
-//                    margin: EdgeInsets.only(top: 20, bottom: 20),
-//                    decoration: BoxDecoration(
-//                        color: Colors.white,
-//                        borderRadius: BorderRadius.circular(50),
-//                        boxShadow: [
-//                          BoxShadow(
-//                              blurRadius: 25.0,
-//                              spreadRadius: 5.0,
-//                              color: Colors.deepOrangeAccent,
-//
-//                              //offset is used for distancing of shadow from text.
-//                              //offset shadows goes into right bottom
-//                              offset: Offset(1, 1))
-//                        ]),
-//                    child: Text(
-//                      _options[_currentIndex],
-//                      style: TextStyle(
-//                        color: Colors.deepOrangeAccent,
-//                        fontSize: 35,
-//                        fontWeight: FontWeight.bold,
-//                      ), //textAlign: TextAlign.center,
-//                    ),
-//                  ),
-                 // Expanded(
-                   // child:
                      SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage3(),
                       ),
                     ),
-                  //),
-                //],
-              //),
-
-              //Column(
-                //children: [
-                //  Expanded(
-                    //child:
                      SingleChildScrollView(
                       dragStartBehavior: DragStartBehavior.start,
                       child: Container(
@@ -406,91 +274,41 @@ class _MyHomePageState extends State<MyHomePage>
                         child: ListPage4(),
                       ),
                     ),
-
-                //],
-              //),
-
-             // Column(
-               // children: [
-                 // Expanded(
-                   // child:
-                    SingleChildScrollView(
+                   SingleChildScrollView(
                       dragStartBehavior: DragStartBehavior.start,
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage5(),
                       ),
                     ),
-                  //),
-                //],
-              //),
-
-             // Column(
-               // children: [
-                 // Expanded(
-                   // child:
                   SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage6(),
                       ),
                     ),
-                  //),
-                //],
-              //),
-
-           //   Column(
-             //   children: [
-               //   Expanded(
-                 //   child:
                     SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage7(),
                       ),
                     ),
-                  //),
-                //],
-              //),
-
-              //Column(
-                //children: [
-                  //Expanded(
-                    //child:
                       SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage8(),
                       ),
                     ),
-              //    ),
-            //    ],
-          //    ),
 
-              //Column(
-                //children: [
-                  //Expanded(
-                   // child:
                  SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         child: ListPage9(),
                       ),
                     ),
-                  //),
-                //],
-              //),
-
-
             ],
             controller: _tabController,
           ),
-
-
-
-
-//
-
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(),
         child: Draggable(
@@ -508,43 +326,6 @@ class _MyHomePageState extends State<MyHomePage>
           ),
         ),
       ),
-//      bottomNavigationBar: CurvedNavigationBar(
-//        // color: Colors.white,
-//        backgroundColor: Colors.deepOrangeAccent,
-//        buttonBackgroundColor: Colors.white,
-//        index: 0,
-//
-//
-//        // height: 100,
-//        items: <Widget>[
-//          Icon(
-//            Icons.check_circle_outline,
-//            size: 50,
-//            color: Colors.deepOrangeAccent,
-//          ),
-//          Icon(
-//            Icons.check_circle,
-//            size: 50,
-//            color: Colors.deepOrangeAccent,
-//          ),
-//          Icon(
-//            Icons.favorite,
-//            size: 50,
-//            color: Colors.deepOrangeAccent,
-//          ),
-//        ],
-//
-//        onTap: (index) {
-//          setState(() {
-//            _currentIndex = index;
-//            print(_currentIndex);
-//            print(_counter);
-//
-//
-//          });
-//
-//        },
-//      ),
     );
   }
 }

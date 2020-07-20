@@ -59,4 +59,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.4.4'
     // add SDKs for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation 'com.google.android.gms:play-services-ads:19.2.0'
 }

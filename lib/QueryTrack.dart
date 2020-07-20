@@ -2,39 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hmentor/mentor.dart';
 
 class trackReturn extends StatefulWidget {
   @override
   String email;
   String TI;
-  trackReturn({this.email,this.TI});
+  trackReturn({this.email, this.TI});
   _trackReturnState createState() => _trackReturnState();
-
 }
 
-
-
 class _trackReturnState extends State<trackReturn> {
-
-
+  List<DocumentSnapshot> _queries = [];
   int counter = 1;
-
-//  navigateToDetail(DocumentSnapshot post) {
-//    Navigator.push(
-//        context,
-//        MaterialPageRoute(
-//            builder: (context) => DetailPage(
-//              post: post,
-//            )));
-//  }
-
-  // ignore: missing_return
   Future getPost0() async {
     var firestore = Firestore.instance;
 
-    QuerySnapshot mixh =
-    await firestore.collection("User").document(widget.email).collection("Ask to HMentor").getDocuments();
-    return mixh.documents;
+    QuerySnapshot mixh = await firestore
+        .collection("User")
+        .document(widget.email)
+        .collection("Ask to HMentor")
+        .getDocuments();
+    _queries = mixh.documents;
+    return _queries;
   }
 
   @override
@@ -42,23 +32,30 @@ class _trackReturnState extends State<trackReturn> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.deepOrange[500],size: 30,), onPressed: null)
+          IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.deepOrange[500],
+                size: 30,
+              ),
+              onPressed: null)
         ],
         backgroundColor: Colors.deepOrange[500],
         title: Padding(
           padding: const EdgeInsets.only(/*left: 70*/),
-          child: Text(widget.email,
+          child: Text(
+            widget.email,
             style: GoogleFonts.pacifico(
                 textStyle: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     shadows: [
-                      Shadow(
-                          blurRadius: 6.0,
-                          color: Colors.black,
-                          offset: Offset(5.0, 5.0))
-                    ])),
+                  Shadow(
+                      blurRadius: 6.0,
+                      color: Colors.black,
+                      offset: Offset(5.0, 5.0))
+                ])),
           ),
         ),
       ),
@@ -90,47 +87,73 @@ class _trackReturnState extends State<trackReturn> {
                     alignment: Alignment.topCenter,
                     child: Image.asset("assets/LOAD.gif"),
                   );
-                } else {
-                  return ListView.builder(
-//                      padding: const EdgeInsets.only(
-//                          bottom: kFloatingActionButtonMargin + 200),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-
-                          elevation: 20,
-                          margin: EdgeInsets.all(10.8),
-                          color: Colors.white,
-                          child: ListTile(
-                            title: Text(
-                              /*"Problem Statement:- " +"\n"+*/
-                              "$index. " + snapshot.data[index].data["Description"],
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Reply From HMentor:- " +
-                                      snapshot.data[index].data["Reply"],
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black38),
-                                ),
-//                              RaisedButton.icon(
-//                                  onPressed: () =>
-//                                      navigateToDetail(snapshot.data[index]),
-//                                  label: Text("SeeMore"),
-//                                  icon: Icon(Icons.arrow_right))
-                              ],
-                            ),
+                }
+                if (_queries.length == 0) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Card(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.error,size: 40,color: Colors.purple,),
+                          Text("Opps...! SORRY",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.purple),),
+                          Text(
+                            "No Queries. Need to post a query first from Ask to Hmentor Page",
+                            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 25),
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      });
+                          InkWell(onTap: () =>  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Mentor())),child: Text("Post Your First Query",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.red),))
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+
+                else {
+                  return SingleChildScrollView(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 20,
+                            margin: EdgeInsets.all(10.8),
+                            color: Colors.white,
+                            child: ListTile(
+                              title: Text(
+                                /*"Problem Statement:- " +"\n"+*/
+                                "$index. " +
+                                    snapshot.data[index].data["Description"],
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
+                                    child: Divider(thickness: 3,color: Colors.green,),
+                                  ),
+                                  Text(
+                                    "Reply From HMentor:- " +
+                                        snapshot.data[index].data["Reply"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,fontSize: 17,),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  );
                 }
               }),
         ),
@@ -138,4 +161,3 @@ class _trackReturnState extends State<trackReturn> {
     );
   }
 }
-

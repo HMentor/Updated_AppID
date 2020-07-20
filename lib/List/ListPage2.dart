@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'DetaiPage.dart';
-
-class ListPage3 extends StatefulWidget {
+import 'package:hmentor/DetaiPage.dart';
+class ListPage2 extends StatefulWidget {
   @override
-  _ListPage3State createState() => _ListPage3State();
+  _ListPage2State createState() => _ListPage2State();
 }
-
 TextEditingController editingController;
-
-class _ListPage3State extends State<ListPage3> {
+Future Quota;
+class _ListPage2State extends State<ListPage2> {
   navigateToDetail(DocumentSnapshot post) {
     Navigator.push(
         context,
@@ -20,24 +17,22 @@ class _ListPage3State extends State<ListPage3> {
                   post: post,
                 )));
   }
-
   Future getPost1() async {
     var firestore = Firestore.instance;
-    // else{
-    //if(widget.currentIndex ==2 && widget.icounter==0) {
     QuerySnapshot qn =
-        await firestore.collection("Mobile Based Hard").getDocuments();
+        await firestore.collection("Mobile Based Medium").getDocuments();
     return qn.documents;
   }
 
-  // if(widget.currentIndex ==0 && widget.icounter==0){
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Quota = getPost1();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text("Mobile Hard"),),
-      // ignore: missing_return
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -53,13 +48,10 @@ class _ListPage3State extends State<ListPage3> {
           ),
         ),
         child: FutureBuilder(
-            future: getPost1(),
-            // ignore: missing_return
+            future: Quota,
             builder: (_, snapshot) {
-              //proitem = snapshot.data["Problem Statement"];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                  //height: MediaQuery.of(context).size.height,
                   alignment: Alignment.topCenter,
                   child: Image.asset("assets/LOAD.gif"),
                 );
@@ -76,8 +68,7 @@ class _ListPage3State extends State<ListPage3> {
                         color: Colors.white,
                         child: ListTile(
                           title: Text(
-                            /*"Problem Statement:- " +"\n"+*/
-                           "$index. "+ snapshot.data[index].data["Problem Statement"],
+                            "$index. "+snapshot.data[index].data["Problem Statement"],
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
@@ -102,8 +93,7 @@ class _ListPage3State extends State<ListPage3> {
                           ),
                         ),
                       );
-                    });
-              }
+                    });}
             }),
       ),
     );

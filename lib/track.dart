@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hmentor/QueryTrack.dart';
+import 'package:hmentor/banner.dart';
 
 import 'DetaiPage.dart';
 
@@ -197,10 +198,11 @@ void _saveForm() {
                        ),
                      ),
                    ),
+                   BannerAdPage()
                  ],),
+               ]),
+         ),
 
-           ]),
-         )
       ),
     );
   }

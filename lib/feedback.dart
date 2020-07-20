@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hmentor/main.dart';
-import 'package:hmentor/sendMail.dart';
+
 
 
 class feedback extends StatefulWidget {
@@ -57,7 +57,7 @@ class _feedbackState extends State<feedback> {
 
   Future<void> uploadingData(String name, String email, String Mobile,
       String subject, String feedback_suggestion) async {
-    await Firestore.instance.collection("Feedback and Suggestion").add({
+    await Firestore.instance.collection("User").document(_query.email).collection("Feedback&Suggestion").add({
       'Problem Statement': subject,
       'Email': email,
       'Description': feedback_suggestion,
@@ -79,7 +79,6 @@ class _feedbackState extends State<feedback> {
     _form.currentState.save();
     uploadingData(_query.name, _query.email, _query.Mobile, _query.subject,
         _query.feedback_suggestion);
-    sendMail(email: _query.email,name: _query.name,subject: _query.subject,suggestion: _query.feedback_suggestion,mobile: _query.Mobile);
     showAlertDialog(context);
     print(_query.name);
     print(_query.email);

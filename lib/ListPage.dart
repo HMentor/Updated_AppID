@@ -13,6 +13,10 @@ class ListPage extends StatefulWidget {
 TextEditingController editingController;
 
 class _ListPageState extends State<ListPage> {
+
+
+int counter = 1;
+
   navigateToDetail(DocumentSnapshot post) {
     Navigator.push(
         context,
@@ -21,6 +25,7 @@ class _ListPageState extends State<ListPage> {
                   post: post,
                 )));
   }
+
   // ignore: missing_return
   Future getPost0() async {
     var firestore = Firestore.instance;
@@ -75,7 +80,7 @@ class _ListPageState extends State<ListPage> {
                         child: ListTile(
                           title: Text(
                             /*"Problem Statement:- " +"\n"+*/
-                            snapshot.data[index].data["Problem Statement"],
+                            "$index. " + snapshot.data[index].data["Problem Statement"],
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,

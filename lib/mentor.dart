@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hmentor/main.dart';
+import 'package:hmentor/track.dart';
 
 
 
@@ -17,7 +18,8 @@ class Mentor extends StatefulWidget {
 
 // ignore: camel_case_types
 class _mentorState extends State<Mentor> {
-//  TextEditingController tx
+  String title = "Ask to HMentor";
+
   String getValue(){
      if(widget.post == null)
        {
@@ -54,14 +56,18 @@ class _mentorState extends State<Mentor> {
     getValue();
   }
 
+
+
+
   Future<void> uploadingData(String name, String email,
       String Mobile, String problem_statement, String help_description) async {
-    await Firestore.instance.collection("User Query").add({
+    await Firestore.instance.collection("User").document(_query.email).collection(title).add({
       'Problem Statement': problem_statement,
       'email': email,
       'Description': help_description,
       'Phone Number': Mobile,
       'Name' : name,
+      'Reply' : "Waiting for Reply",
     });
   }
 
@@ -163,8 +169,7 @@ class _mentorState extends State<Mentor> {
         backgroundColor: Colors.deepOrange[500],
         title: Padding(
           padding: const EdgeInsets.only(/*left: 70*/),
-          child: Text(
-            "Ask to HMentor",
+          child: Text(title,
             style: GoogleFonts.pacifico(
                 textStyle: TextStyle(
                     color: Colors.white,
@@ -632,16 +637,67 @@ class _mentorState extends State<Mentor> {
 
 
                     //here InkWell is used for splashColors
-                    InkWell(
-                       onTap: _saveForm,
-                      splashColor: Colors.grey,
-                      child: Container(
-                        width: 300,
-                        height: 40,
-                        margin: EdgeInsets.only(top: 20),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                           onTap: _saveForm,
+                          splashColor: Colors.grey,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 150,
+                              height: 40,
+                              margin: EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 25.0,
+                                        spreadRadius: 5.0,
+                                        color: Colors.yellow,
+                                        //offset is used for distancing of shadow from text.
+                                        //offset shadows goes into right bottom
+                                        offset: Offset(1, 1))
+                                  ]),
+
+
+                                 child: Padding(
+                                   padding: const EdgeInsets.only(top:8.0),
+                                   child: Text(
+                                        'Ask HMentor',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green),textAlign: TextAlign.center,
+                                      ),
+                                 ),
+
+
+
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:8.0),
+                          child: Text("OR",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                        ),
+                        InkWell(
+                          onTap: () =>  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => track(Ti: title))),
+                          splashColor: Colors.grey,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 170,
+                              height: 40,
+                              margin: EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(50),
                             boxShadow: [
                               BoxShadow(
                                   blurRadius: 25.0,
@@ -650,33 +706,26 @@ class _mentorState extends State<Mentor> {
                                   //offset is used for distancing of shadow from text.
                                   //offset shadows goes into right bottom
                                   offset: Offset(1, 1))
-                            ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Icon(
-                                Icons.face,
-                                size: 40,
-                                color: Colors.deepOrangeAccent,
+                            ]
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top:8.0),
+                                child: Text(
+                                  'Track your Query',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green),textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Text(
-                                'Ask HMentor',
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green),
-                              ),
-                            ),
-                            Icon(Icons.face,size: 40,color: Colors.deepOrangeAccent,)
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+
+
+
 //                    Padding(
 //                      padding: const EdgeInsets.only(top: 10.0),
 //                      child: Text("Forget Password ?",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white,),),

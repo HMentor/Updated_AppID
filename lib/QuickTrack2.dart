@@ -51,18 +51,18 @@ class _trackReturnState extends State<trackReturn> {
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     shadows: [
-                  Shadow(
-                      blurRadius: 6.0,
-                      color: Colors.black,
-                      offset: Offset(5.0, 5.0))
-                ])),
+                      Shadow(
+                          blurRadius: 6.0,
+                          color: Colors.black,
+                          offset: Offset(5.0, 5.0))
+                    ])),
           ),
         ),
       ),
       // ignore: missing_return
 
-      body: SingleChildScrollView(
-        child: Container(
+      body:  Container(
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -111,11 +111,8 @@ class _trackReturnState extends State<trackReturn> {
                     ),
                   );
                 }
-
-
                 else {
-                  return SingleChildScrollView(
-                    child: ListView.builder(
+                  return ListView.builder(
                         shrinkWrap: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
@@ -144,20 +141,20 @@ class _trackReturnState extends State<trackReturn> {
                                     "Reply From HMentor:- " +
                                         snapshot.data[index].data["Reply"],
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue,fontSize: 17,),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,fontSize: 17,),
                                   ),
 
                                 ],
                               ),
                             ),
                           );
-                        }),
-                  );
+                        });
+
                 }
               }),
         ),
-      ),
+
     );
   }
 }

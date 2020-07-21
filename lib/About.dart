@@ -15,7 +15,7 @@ class _AboutState extends State<About> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepOrange[400],
-        title: Text(
+        title:  Text(
           "About Us",
           style: GoogleFonts.pacifico(
               textStyle: TextStyle(
@@ -57,19 +57,19 @@ class _AboutState extends State<About> {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: AssetImage('assets/logo.jpg'),
+                            backgroundImage: const AssetImage('assets/logo.jpg'),
                             maxRadius: 35,
                           ),
                           Column(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 15.0),
-                                child: Text(
+                                child:const Text(
                                   "HMentor",
                                   style: TextStyle(fontSize: 25),
                                 ),
                               ),
-                              Text("2020 HSpark"),
+                             const Text("© 2020 String~H"),
                             ],
                           )
                         ],
@@ -79,7 +79,7 @@ class _AboutState extends State<About> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 25.0, left: 10),
-                          child: Icon(
+                          child:const Icon(
                             Icons.error_outline,
                             color: Colors.black,
                             size: 30,
@@ -90,11 +90,11 @@ class _AboutState extends State<About> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                           const   Text(
                                 "Version",
                                 style: TextStyle(fontSize: 20),
                               ),
-                              Text("1.0.0")
+                          const    Text("1.0.0+1")
                             ],
                           ),
                         )
@@ -106,7 +106,7 @@ class _AboutState extends State<About> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 25.0, left: 10),
-                            child: Icon(
+                            child: const Icon(
                               Icons.code,
                               color: Colors.black,
                               size: 30,
@@ -117,11 +117,11 @@ class _AboutState extends State<About> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                               const Text(
                                   "Size",
                                   style: TextStyle(fontSize: 20),
                                 ),
-                                Text("1.0.0")
+                              const  Text("1.0.0")
                               ],
                             ),
                           )
@@ -139,15 +139,16 @@ class _AboutState extends State<About> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                     const Text(
                         "About App",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 15,
                       ),
-                      Text(
-                          "Our primary objective is to assist and guide students with well researched, categorised, and quality project topics with proper descriptionat free of cost. Most of the project topics are real-word problems took from various global events like Smart India Hackathon. Topics are well categories as per their complexity level and as per the type of development. Students can ask queries to the mentor from application. We are helping the student to solve his/her problem by providing virtual mentorship if student ask the query.We are not claiming any type of copyright. The data we have collected is from other websites and from portal. Hence the copyright is to the respective owner of data."),
+                      const Text(
+                          "Our primary objective is to assist and guide students with well researched, categorised, and quality project topics with proper description at free of cost. Most of the project topics are real-word problems took from various global events like Smart India Hackathon. Topics are well categories as per their complexity level and as per the type of development. Students can ask queries to the mentor from application. We are helping the student to solve his/her problem by providing virtual mentorship if students ask the query. \"We are not claiming any type of copyright\". The data we have collected is from other websites and from various portals. Hence the \"copyright is to the respective owner of data.\""),
+                  const Text("As per our slogan \"Let's Start from Zero\", we are capable of providing help to the student for their projects from zero level. Student can ask their Doubts, Queries, Question related to their projects from \"Ask to HMentor\" page. From basic software to the hardest real-word applications are available on this app. We are always ready to help student with our experience and knowledge. For any suggestions and Feedback students can post their views on \"Feedback and Suggestion\" page.")
                     ],
                   ),
                 ),
@@ -160,7 +161,7 @@ class _AboutState extends State<About> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                    const  Text(
                         "Author",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -170,7 +171,7 @@ class _AboutState extends State<About> {
                           children: [
                             CircleAvatar(
                               backgroundImage:
-                                  AssetImage('assets/Harshali.jpg'),
+                              const AssetImage('assets/Harshali.jpg'),
                               maxRadius: 25,
                             ),
                             Padding(
@@ -178,13 +179,13 @@ class _AboutState extends State<About> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                              const  Text(
                                     "Harshali Tayade",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text("harshalitayade21@gmail.com"),
+                              const Text("harshalitayade21@gmail.com"),
                                 ],
                               ),
                             )
@@ -196,7 +197,7 @@ class _AboutState extends State<About> {
                           Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: CircleAvatar(
-                              backgroundImage: AssetImage('assets/Hitesh.jpg'),
+                              backgroundImage:const AssetImage('assets/Hitesh.jpg'),
                               maxRadius: 25,
                             ),
                           ),
@@ -205,13 +206,13 @@ class _AboutState extends State<About> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                             const   Text(
                                   "Hitesh Dharmadhikari",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text("d.hitesh1999@gmail.com")
+                             const   Text("d.hitesh1999@gmail.com")
                               ],
                             ),
                           )
@@ -224,7 +225,7 @@ class _AboutState extends State<About> {
                             Padding(
                               padding: const EdgeInsets.only(top: 25.0),
                               child: CircleAvatar(
-                                backgroundImage: AssetImage('assets/Vinay.jpg'),
+                                backgroundImage:const AssetImage('assets/Vinay.jpg'),
                                 maxRadius: 25,
                               ),
                             ),
@@ -234,13 +235,13 @@ class _AboutState extends State<About> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                               const   Text(
                                     "Vinay Badgujar",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text("hexnewtron@gmail.com")
+                              const    Text("hexnewtron@gmail.com")
                                 ],
                               ),
                             )
@@ -259,7 +260,7 @@ class _AboutState extends State<About> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                   const   Text(
                         "Share & Feedback",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -267,7 +268,7 @@ class _AboutState extends State<About> {
                         padding: const EdgeInsets.only(top: 15.0),
                         child: Row(
                           children: [
-                            Icon(
+                         const   Icon(
                               Icons.share,
                               color: Colors.black,
                               size: 30,
@@ -278,7 +279,7 @@ class _AboutState extends State<About> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    child: Text(
+                                    child: const Text(
                                       "Share to your Friend",
                                       style: TextStyle(
                                           fontSize: 20,

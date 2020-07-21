@@ -79,18 +79,18 @@ class _feedbackState extends State<feedback> {
         });
     AlertDialog alert = AlertDialog(
       scrollable: true,
-      title: Text("Feedback Submitted..!"),
+      title: const Text("Feedback Submitted..!"),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.check_circle,
             color: Colors.green,
             size: 60,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
+            child:const Text(
                 "Thank you for your valuable time. We will get back to you within 12 Hours if needed"),
           ),
           Padding(
@@ -132,6 +132,7 @@ class _feedbackState extends State<feedback> {
 
   @override
   Widget build(BuildContext context) {
+    double sizee = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -152,7 +153,7 @@ class _feedbackState extends State<feedback> {
                 textStyle: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                    fontSize: sizee/16,
                     shadows: [
                   Shadow(
                       blurRadius: 6.0,
@@ -191,7 +192,7 @@ class _feedbackState extends State<feedback> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: Text(
+                      child: const Text(
                         "Please give your feedback or suggestions related to the Application.",
                         style: TextStyle(
                           color: Colors.white,
@@ -221,7 +222,7 @@ class _feedbackState extends State<feedback> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.person_pin,
                               color: Colors.white,
                             ),
@@ -281,7 +282,7 @@ class _feedbackState extends State<feedback> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.email,
                               color: Colors.white,
                             ),
@@ -341,7 +342,7 @@ class _feedbackState extends State<feedback> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.phone_iphone,
                               color: Colors.white,
                             ),
@@ -402,7 +403,7 @@ class _feedbackState extends State<feedback> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.sync_problem,
                               color: Colors.white,
                             ),
@@ -510,8 +511,8 @@ class _feedbackState extends State<feedback> {
                       onTap: _saveForm,
                       splashColor: Colors.grey,
                       child: Container(
-                        width: 300,
-                        height: 40,
+                        width: sizee/1.5,
+                        height: MediaQuery.of(context).size.height/17,
                         margin: EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -536,7 +537,7 @@ class _feedbackState extends State<feedback> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 15.0),
-                              child: Text(
+                              child: const Text(
                                 'Send It',
                                 style: TextStyle(
                                     fontSize: 30,
@@ -544,7 +545,7 @@ class _feedbackState extends State<feedback> {
                                     color: Colors.green),
                               ),
                             ),
-                            Icon(
+                           const Icon(
                               Icons.send,
                               size: 40,
                               color: Colors.deepOrangeAccent,

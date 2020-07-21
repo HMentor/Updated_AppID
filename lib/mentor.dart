@@ -74,7 +74,7 @@ class _mentorState extends State<Mentor> {
 
   showAlertDialog(BuildContext context) {
     Widget okButton = FlatButton(
-      child: Text("Close"),
+      child: const Text("Close"),
       onPressed: () {Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MyHomePage()),
@@ -82,14 +82,14 @@ class _mentorState extends State<Mentor> {
     );
     AlertDialog alert = AlertDialog(
       scrollable: true,
-      title: Text("Query Submitted..!"),
+      title: const Text("Query Submitted..!"),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Icon(Icons.check_circle,color: Colors.green,size: 60,),
+        const Icon(Icons.check_circle,color: Colors.green,size: 60,),
         Padding(
           padding: const EdgeInsets.only(top:15.0),
-          child: Text("We will get back to you within 12 Hours"),
+          child: const Text("We will get back to you within 12 Hours"),
         ),
           Padding(
             padding: const EdgeInsets.only(top:10.0),
@@ -131,9 +131,9 @@ class _mentorState extends State<Mentor> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.deepOrange[500],size: 30,), onPressed: null)
+          IconButton(icon: Icon(Icons.search,color: Colors.deepOrange[400],size: 30,), onPressed: null)
         ],
-        backgroundColor: Colors.deepOrange[500],
+        backgroundColor: Colors.deepOrange[400],
         title: Padding(
           padding: const EdgeInsets.only(/*left: 70*/),
           child: Text(title,
@@ -156,7 +156,7 @@ class _mentorState extends State<Mentor> {
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height+100,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -180,7 +180,7 @@ class _mentorState extends State<Mentor> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top:20),
-                      child: Text("If You Have question, Just Ask Mentor.",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),
+                      child: const Text("If You Have question, Just Ask Mentor.",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -202,7 +202,7 @@ class _mentorState extends State<Mentor> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.person_pin,
                               color: Colors.white,
                             ),
@@ -263,7 +263,7 @@ class _mentorState extends State<Mentor> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.email,
                               color: Colors.white,
                             ),
@@ -325,7 +325,7 @@ class _mentorState extends State<Mentor> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.phone_iphone,
                               color: Colors.white,
                             ),
@@ -387,7 +387,7 @@ class _mentorState extends State<Mentor> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.sync_problem,
                               color: Colors.white,
                             ),
@@ -448,7 +448,7 @@ class _mentorState extends State<Mentor> {
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.view_list,
                               color: Colors.white,
                             ),
@@ -491,7 +491,7 @@ class _mentorState extends State<Mentor> {
                         },
                       ),
                     ),
-                    Row(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
@@ -500,7 +500,7 @@ class _mentorState extends State<Mentor> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              width: 150,
+                              width: 170,
                               height: 40,
                               margin: EdgeInsets.only(top: 20),
                               decoration: BoxDecoration(
@@ -515,7 +515,7 @@ class _mentorState extends State<Mentor> {
                                   ]),
                               child: Padding(
                                    padding: const EdgeInsets.only(top:8.0),
-                                   child: Text(
+                                   child: const Text(
                                         'Ask HMentor',
                                         style: TextStyle(
                                             fontSize: 20,
@@ -528,7 +528,7 @@ class _mentorState extends State<Mentor> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:8.0),
-                          child: Text("OR",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                          child: const Text("OR",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                         ),
                         InkWell(
                           onTap: () =>  Navigator.push(
@@ -555,7 +555,7 @@ class _mentorState extends State<Mentor> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.only(top:8.0),
-                                child: Text(
+                                child: const Text(
                                   'Track your Query',
                                   style: TextStyle(
                                       fontSize: 20,

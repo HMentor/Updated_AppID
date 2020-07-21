@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage>
   }
   @override
   Widget build(BuildContext context) {
+    double sizee = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -82,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage>
                 textStyle: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 29,
+                    fontSize: sizee/14,
                     shadows: [
                   Shadow(
                       blurRadius: 6.0,

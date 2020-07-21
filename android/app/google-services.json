@@ -37,6 +37,35 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:658982037393:android:1619f5b87019bb4c585c30",
+        "android_client_info": {
+          "package_name": "com.wordpress.learninghope302357229.hmentor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658982037393-rpuiskqnrmuvetnbm27qm7pj75eq65ok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC62-QuS-jtgV94_jxpoz_NBzINSj1XNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658982037393-rpuiskqnrmuvetnbm27qm7pj75eq65ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:658982037393:android:9a53c0eb4dc8b118585c30",
         "android_client_info": {
           "package_name": "hh.hmentor"
